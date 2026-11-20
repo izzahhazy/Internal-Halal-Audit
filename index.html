@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internal Halal Audit Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f2;--card:#fff;--ink:#1d2b24;--mut:#5f6f66;--g:#1f6b4a;--line:#d5ddd8;--p:#1f6b4a;--tp:#b3261e;--tb:#6b7280}
+@media (prefers-color-scheme:dark){:root{--bg:#141a17;--card:#1d2621;--ink:#e8efe9;--mut:#9fb0a6;--g:#4cb98a;--line:#33423a;--p:#4cb98a;--tp:#f0877f;--tb:#9ca3af}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--g);color:#fff;padding:14px 16px}
+header h1{margin:0;font-size:17px}header small{opacity:.85}
+nav{display:flex;gap:6px;margin-top:8px}nav button{flex:1;padding:8px;border:0;border-radius:6px;background:rgba(255,255,255,.18);color:#fff;font-size:14px}
+nav button.on{background:#fff;color:#1f6b4a;font-weight:600}
+main{max-width:920px;margin:0 auto;padding:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px}
+h2{font-size:16px;margin:0 0 8px;color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+label{display:block;font-size:12px;color:var(--mut)}
+input[type=text],input[type=date],input[type=time],textarea,select{width:100%;padding:7px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:44px;resize:vertical}
+.it{border-top:1px solid var(--line);padding:10px 0}
+.it .q{display:flex;gap:6px}.it .q b{min-width:22px}
+.st{display:flex;gap:6px;margin:6px 0}
+.st label{flex:1;margin:0;text-align:center;border:1px solid var(--line);border-radius:6px;padding:6px;font-size:14px;color:var(--ink);cursor:pointer}
+.st input{display:none}
+.st input:checked+span{font-weight:700}
+.st label:has(input[value=P]:checked){background:var(--p);color:#fff}
+.st label:has(input[value=TP]:checked){background:var(--tp);color:#fff}
+.st label:has(input[value=TB]:checked){background:var(--tb);color:#fff}
+.two{display:grid;grid-template-columns:1fr 2fr;gap:6px}
+.sec-sum{font-size:12px;color:var(--mut);margin-top:6px}
+.btn{padding:10px 14px;border:0;border-radius:6px;background:var(--g);color:#fff;font:inherit;font-weight:600}
+.btn.alt{background:transparent;color:var(--g);border:1px solid var(--g)}
+.btn.red{background:var(--tp)}
+.bar{display:flex;gap:8px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid var(--line);padding:5px;text-align:left;vertical-align:top}
+td input,td textarea{padding:4px;font-size:13px}
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.sum div{border:1px solid var(--line);border-radius:6px;padding:8px}.sum b{font-size:20px;display:block}
+.hide{display:none}#toast{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:6px;display:none}
+#pform .pr{display:none}
+@media print{
+ @page{size:A4;margin:12mm 10mm 12mm;@bottom-center{content:"Page " counter(page) " of " counter(pages);font-size:9px}}
+ body{background:#fff;color:#000;font-size:11px}header,nav,.bar,.noprint,.st,#toast,#rec,#ana,#edit{display:none!important}
+ #fill,#set{display:none!important}#pform{display:block!important}.card{border:0;padding:0;margin-bottom:6px;break-inside:auto}
+ .it{break-inside:avoid;padding:3px 0}
+ #pform .pr{display:inline}.pr{font-weight:700}
+ input,textarea{border:0!important;background:none!important;color:#000!important;padding:0!important}
+ .sb.hide{display:block!important}.dt,.nb{display:none!important}.sh{color:#000;font-size:13px}.sh small{display:none}
+ .det,.det.hide{display:none!important}.det.has{display:grid!important}.pr{display:inline!important}
+ .printhead{display:block!important;text-align:center;font-weight:700;font-size:14px;border-bottom:2px solid #000;margin-bottom:6px}
+ th,td{border-color:#000}
+}
+.printhead{display:none}
+#pform{display:none}
+#pform{font-family:Arial,Helvetica,sans-serif;color:#000}
+#pform h1{font-size:15px;text-align:center;margin:0 0 6px}
+#pform h3{font-size:12px;margin:10px 0 3px;break-after:avoid}
+#pform table{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:3px}
+#pform th,#pform td{border:1px solid #000;padding:3px 4px;vertical-align:top;text-align:left}
+#pform th{background:#e6e6e6}
+#pform thead{display:table-header-group}#pform tr{break-inside:avoid}
+#pform .c{text-align:center;width:26px;font-size:13px;line-height:1}
+#pform .n{width:26px;text-align:center}#pform .k{width:80px}
+#pform .pl{border-bottom:1px solid #000;min-height:16px;padding:2px 0;font-size:10.5px;white-space:pre-wrap}
+#pform p{font-size:9.5px;margin:4px 0}
+#pform table.sg{table-layout:fixed}#pform .sg td{width:50%;height:30mm}#pform .sgl{min-height:13mm;margin:3px 0 6px;display:flex;align-items:flex-end}
+nav{flex-wrap:wrap}nav button{font-size:13px;padding:7px 4px;min-width:30%}
+.br{display:grid;grid-template-columns:minmax(90px,38%) 1fr 52px;gap:6px;align-items:center;margin:5px 0;font-size:13px}
+.bt{background:var(--bg);border-radius:4px;height:14px;overflow:hidden}.bt div{height:100%}.bv{text-align:right;font-weight:600}
+.cols{display:flex;gap:6px;align-items:flex-end;height:170px;overflow-x:auto;padding-top:6px}
+.cl{flex:0 0 46px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:11px}
+.cl i{display:block;width:70%;background:var(--g);border-radius:3px 3px 0 0;min-height:2px}.cl small{color:var(--mut);margin-top:3px;text-align:center;font-size:10px}
+.ed .row{display:flex;gap:6px;margin:5px 0}.ed .row textarea{flex:1}
+.mut{color:var(--mut);font-size:12px}
+.pr{display:none}
+.sh{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;background:none;border:0;padding:4px 0;font:inherit;font-size:16px;font-weight:600;color:var(--g);text-align:left}
+.sh small{font-weight:400;color:var(--mut);font-size:12px;text-align:right}
+.sec.out{display:none!important}
+label.sc{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink);margin:6px 0}
+.dt{padding:4px 10px;font-size:12px;margin:2px 0 6px}
+#tabs{display:flex;flex-wrap:wrap;gap:8px;max-width:920px;margin:12px auto 0;padding:0 12px}
+#tabs button{flex:1 1 130px;margin:0;padding:13px 8px;min-width:0;font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--mut)}
+#tabs button.on{background:#1d2b24;border-color:#1d2b24;color:#fff}
+@media (prefers-color-scheme:dark){#tabs button.on{background:var(--g);border-color:var(--g);color:#10201a}}
+.vbox{border:1px solid var(--line);border-radius:8px;padding:10px}.vbox>b{display:block;margin-bottom:6px;font-size:14px}.vbox label{margin-top:6px}
+.sgn{font-family:"Dancing Script","Segoe Script","Brush Script MT","Lucida Handwriting",cursive;font-size:34px;line-height:1.2;min-height:48px;border-bottom:1px solid var(--line);color:#1a3d8f;padding:2px 4px}
+@media (prefers-color-scheme:dark){.sgn{color:#8fb4ff}}
+#pform .sgp{font-family:"Dancing Script","Segoe Script","Brush Script MT","Lucida Handwriting",cursive;font-size:22px;color:#1a3d8f;line-height:1.1}
+</style>
+</head>
+<body>
+<header>
+ <h1>Internal Halal Audit Checklist</h1><small>Hexa Food Sdn. Bhd. | Working document | MHMS 2020</small>
+</header>
+<nav id="tabs"><button id="tFill" class="on" onclick="tab('fill')">Fill checklist</button><button id="tRec" onclick="tab('rec')">Records / Print</button><button id="tSet" onclick="tab('set')">Google Sheet</button><button id="tAna" onclick="tab('ana')">Trend Analysis</button><button id="tEdit" onclick="tab('edit')">🔒 Edit Form</button></nav>
+<main>
+<div id="fill">
+ <div class="printhead">INTERNAL HALAL AUDIT CHECKLIST — HEXA FOOD SDN. BHD.</div>
+ <div class="card"><h2>A. Audit information</h2>
+  <div class="grid">
+   <div><label>Company name</label><input type="text" id="syarikat" value="Hexa Food Sdn. Bhd."></div>
+   <div><label>Audit date</label><input type="date" id="tarikh"></div>
+   <div><label>Location / factory</label><select id="lokasi"><option value="">Select</option><option>F2</option><option>F3</option><option>HQ</option><option>Others</option></select></div>
+   <div><label>Time</label><input type="time" id="masa"></div>
+   <div><label>Department audited</label><input type="text" id="bahagian"></div>
+   <div><label>Auditor</label><input type="text" id="juruaudit"></div>
+   <div><label>Auditee</label><input type="text" id="auditee"></div>
+   <div><label>Reference document</label><input type="text" id="rujukan" value="MHMS 2020 / related SOPs"></div>
+  </div>
+  <p class="noprint" style="font-size:12px;color:var(--mut);margin:8px 0 0">C = Compliant, NC = Non-compliant, NA = Not applicable. Record the document code no. and objective evidence for each item. This checklist is a working draft and must be verified against the official documents and the current certification scope.</p>
+ </div>
+ <div id="secs"></div>
+ <div class="card"><h2>B. Non-conformance record and corrective action</h2>
+  <div class="bar noprint" style="margin-bottom:8px"><button class="btn alt" onclick="addNC()">+ Add row</button><button class="btn alt" onclick="autoNC()">Fill from NC items</button></div>
+  <div style="overflow-x:auto"><table id="nc"><thead><tr><th>No.</th><th>Finding / objective evidence</th><th>Corrective action</th><th>PIC</th><th>Target date</th><th>Status</th><th>Effectiveness verification</th><th class="noprint"></th></tr></thead><tbody></tbody></table></div>
+ </div>
+ <div class="card"><h2>C. Audit summary</h2>
+  <div class="sum"><div><b id="sAll">0</b>Checked</div><div><b id="sP">0</b>C</div><div><b id="sTP">0</b>NC</div><div><b id="sTB">0</b>NA</div></div>
+  <p style="margin:8px 0 0"><b>Compliance:</b> <span id="sPct">-</span> <span class="noprint" style="color:var(--mut);font-size:12px">(C ÷ (C + NC), NA excluded)</span></p>
+  <label style="margin-top:8px">Auditor conclusion / comments</label><textarea id="ulasan"></textarea>
+ </div>
+ <div class="card"><h2>D. Verification</h2>
+  <div class="grid"><div class="vbox"><b>Prepared by</b><label>Name</label><input type="text" id="sedia" oninput="sig()"><label>Position</label><input type="text" id="pSedia"><label>Date</label><input type="date" id="tSedia"><label>Signature</label><div class="sgn" id="sgSedia"></div></div><div class="vbox"><b>Verified by</b><label>Name</label><input type="text" id="semak" oninput="sig()"><label>Position</label><input type="text" id="pSemak"><label>Date</label><input type="date" id="tSemak"><label>Signature</label><div class="sgn" id="sgSemak"></div></div></div>
+  <p class="noprint" style="font-size:12px;color:var(--mut)">Document control note: this draft is an internal audit aid. Verify each item against MHMS 2020, the prevailing MPPHM, the industry category, the certification scope and company procedures before approving it as a controlled document. Corrective action timelines must follow the prevailing procedures and requirements.</p>
+ </div>
+ <div class="bar noprint"><button class="btn" onclick="save()">Save audit</button><button class="btn alt" onclick="doPrint()">Print</button><button class="btn red" onclick="if(confirm('Clear the form?')){localStorage.removeItem('iha_draft');reset();asNote('')}">New form</button><span id="as" class="mut" style="align-self:center"></span></div>
+</div>
+
+<div id="rec" class="hide"><div class="card"><h2>Saved records</h2><div class="grid"><div><label>Location</label><select id="rL" onchange="list()"><option value="">All</option><option>F2</option><option>F3</option><option>HQ</option><option>Others</option></select></div></div><div class="bar" style="margin:8px 0"><button class="btn alt" onclick="sync()">Refresh</button><span class="mut" id="syn"></span></div><div id="recList"></div></div></div>
+
+<div id="ana" class="hide">
+ <div class="card"><h2>Trend analysis</h2><div class="grid"><div><label>Year</label><select id="aY" onchange="ana()"></select></div><div><label>Location</label><select id="aL" onchange="ana()"><option value="">All</option><option>F2</option><option>F3</option><option>HQ</option><option>Others</option></select></div></div>
+ <p class="mut">Based on audits saved in this browser. Compliance = C ÷ (C + NC), NA excluded.</p><div id="aSum"></div></div>
+ <div class="card"><h2>Compliance trend (% per audit)</h2><div id="aTrend"></div></div>
+ <div class="card"><h2>Compliance by section</h2><label>Audit</label><select id="aSel" onchange="ana(1)"></select><div id="aSec" style="margin-top:8px"></div></div>
+ <div class="card"><h2>Recurring non-conformances</h2><p class="mut">Items marked NC most often across the audits shown.</p><div id="aNC"></div></div>
+</div>
+<div id="edit" class="hide">
+ <div class="card" id="lock"><h2>Edit Form</h2><label>Password (management only)</label><input type="text" id="pw" autocomplete="off" style="-webkit-text-security:disc"><div class="bar" style="margin-top:8px"><button class="btn" onclick="unlock()">Unlock</button></div></div>
+ <div id="ed" class="hide ed"><div class="card"><h2>Edit sections and criteria</h2><p class="mut">Changes apply to new audits. Saved audits keep the criteria they were filled with.</p><div id="edBody"></div>
+  <div class="bar" style="margin-top:10px"><button class="btn alt" onclick="edSec()">+ Add section</button><button class="btn" onclick="edSave()">Save changes</button><button class="btn red" onclick="edDef()">Restore original</button><button class="btn alt" onclick="lockEd()">Lock</button></div></div>
+  <div class="card"><h2>Change password</h2><input type="text" id="npw" placeholder="New password (min. 4 characters)"><div class="bar" style="margin-top:8px"><button class="btn alt" onclick="chPw()">Change password</button></div></div></div>
+</div>
+<div id="set" class="hide"><div class="card"><h2>Google Sheet connection</h2>
+ <label>Web App URL (Apps Script)</label><input type="text" id="url" placeholder="https://script.google.com/macros/s/.../exec">
+ <div class="bar" style="margin-top:8px"><button class="btn" onclick="localStorage.setItem('iha_url',document.getElementById('url').value.trim());toast('Saved')">Save URL</button></div>
+ <p style="font-size:12px;color:var(--mut)">Without a URL, records are saved in this browser only.</p></div></div>
+</main>
+<div id="pform"></div>
+<div id="toast"></div>
+
+<script>
+const DEF=[
+["1. Halal documentation",["Halal file is complete and up to date.","HAS manual / IHCS documents are available according to the applicable system.","Halal policy is approved and communicated to employees.","Appointment of the Halal Executive and Internal Halal Committee (IHC) is recorded, where applicable.","IHC meeting records and follow-up actions are available.","Halal awareness training records are kept.","Previous internal halal audit records and corrective actions are available.","HAS review records and related documentation are up to date."]],
+["2. Raw material and supplier control",["Master list of raw materials is up to date.","Raw materials used match the approved and declared materials.","Halal certificates of raw materials are valid and recognised, where applicable.","Actual manufacturer and supplier names can be identified.","Raw material specifications, COAs and supporting documents are available as required.","Purchase invoices and raw material receiving records are kept.","Changes of supplier, manufacturer or formulation are assessed and approved before use.","New materials are not used before the required halal review and approval.","Halal-risk materials are identified and their controls are recorded."]],
+["3. Personnel and training",["Halal Executive meets the applicable qualification requirements.","IHC membership and responsibilities are clearly defined.","Employees receive halal training according to MHMS requirements and the training plan.","Training attendance and effectiveness records are kept.","Employees understand the prohibition on bringing non-halal materials into production areas.","Employees comply with hygiene rules and wear proper work attire."]],
+["4. Premises and facilities",["Premises are free from contamination that could affect halal status.","Entry of pests is controlled.","Controls to prevent entry of non-halal materials into the premises are implemented.","Receiving, storage and processing areas have suitable controls.","Equipment and utensils are clean and suitable for food production.","No mixing or cross-contamination between approved and unapproved materials.","Sertu (ritual cleansing) requirements are implemented where applicable and records are kept."]],
+["5. Storage of raw materials and finished products",["Identity and approval status of received raw materials are verified.","Raw material labels and batch numbers are clear and identifiable.","Approved materials are stored according to procedure and status.","Rejected, quarantined or unapproved materials are segregated and controlled.","Finished products and rework materials are identified and controlled.","Records of receiving, issuing, transfer and stock balance are traceable.","Storage conditions prevent cross-contamination and material damage."]],
+["6. Production process control",["Product formula matches the approved formula.","Products manufactured fall within the relevant halal certification scope.","Raw material usage follows the approved list and formula.","Batch number is recorded correctly on jumbo bags, drums and production forms.","Breaking, mixing, grinding, sieving and packing processes comply with the specified halal controls.","Cleaning of machines and equipment is carried out according to SOP.","Product that has fallen on the floor or is at risk of contamination is handled according to the approved procedure.","Changes in process, equipment or materials are assessed for halal risk."]],
+["7. Labelling and packaging",["Product name matches the approved product list.","Labels are not misleading and comply with the relevant requirements.","Use of the halal logo complies with the approval and applicable regulations.","Batch number and product identification information are correct.","Packaging materials are suitable and protected from contamination.","Products are not labelled or marketed as halal outside the scope of the relevant approval."]],
+["8. Traceability",["Raw material records can be matched to supplier and batch number.","Production records link raw materials to finished product batches.","Delivery records allow customers and destinations to be identified.","Traceability test or mock recall is carried out and recorded according to procedure.","Product recall procedure is available and understood by relevant parties."]],
+["9. Halal risk control, review and records",["Halal risks are identified, assessed and controlled according to the applicable system.","Halal risk management plan and related controls are up to date.","HAS review is carried out according to MHMS requirements, where applicable.","Laboratory analysis is carried out when required based on risk or authority directive.","All halal records are legible, easily accessible and retained for the specified period.","Previous audit non-conformances have evidence of correction and appropriate follow-up."]]
+];
+const DEFAULT_URL='https://script.google.com/macros/s/AKfycbzt1UsU5R35CY7VGTgB2foBz1cnQx8WtLIfcWYRVJnHgaQwRS5F8aU8LjijcYEdirJ5/exec'; // paste the Apps Script /exec URL here before uploading, so auditors need no setup
+const getU=()=>localStorage.getItem('iha_url')||DEFAULT_URL;
+let REM=[];try{REM=JSON.parse(localStorage.getItem('iha_rem')||'[]')}catch(e){}
+let CFG={S:DEF,pw:"halal123"},S=DEF;
+const $=id=>document.getElementById(id), F=['syarikat','tarikh','lokasi','masa','bahagian','juruaudit','auditee','rujukan','ulasan','sedia','semak','tSedia','tSemak','pSedia','pSemak'];
+function build(){let h='<div class="card"><h2>Audit scope</h2><p class="mut noprint">Untick sections not audited today. They are hidden and left out of the summary.</p>'+S.map((s,i)=>`<label class="sc"><input type="checkbox" id="sp${i}" checked onchange="scopeChg()">${esc(s[0])}</label>`).join('')+'</div>';
+S.forEach((s,i)=>{h+=`<div class="card sec" id="sc${i}"><button class="sh" onclick="openSec(${i})"><span>${esc(s[0])}</span><small id="ss${i}"></small></button><div class="sb hide" id="sb${i}">`;
+s[1].forEach((q,j)=>{h+=`<div class="it"><div class="q"><b>${j+1}</b><span>${esc(q)}</span></div>
+<div class="st">${['P','TP','TB'].map(v=>`<label><input type="radio" name="r${i}_${j}" value="${v}" onchange="chg(${i},${j})"><span>${{P:'C',TP:'NC',TB:'NA'}[v]}</span></label>`).join('')}</div>
+<span class="pr" id="pr${i}_${j}"></span>
+<button class="btn alt dt" id="db${i}_${j}" onclick="det(${i},${j})">+ Remarks</button>
+<div class="det hide" id="dd${i}_${j}"><label>Objective evidence / remarks (record no., document, observation)</label><textarea id="b${i}_${j}" oninput="dstate(${i},${j})"></textarea></div></div>`});
+h+=`<label style="margin-top:8px">Audit evidence / section remarks</label><textarea id="sn${i}"></textarea><div class="bar noprint" style="margin-top:8px"><button class="btn nb" onclick="nextSec(${i})">${i<S.length-1?'Next section':'Finish sections'}</button></div></div></div>`});
+$('secs').innerHTML=h;openSec(0,1)}
+const inScope=i=>{const e=$('sp'+i);return !e||e.checked};
+function openSec(i,force){const b=$('sb'+i);const was=!b.classList.contains('hide');S.forEach((s,k)=>$('sb'+k).classList.add('hide'));if(force||!was){b.classList.remove('hide');if(!force)$('sc'+i).scrollIntoView({behavior:'smooth',block:'start'})}}
+function nextSec(i){let k=i+1;while(k<S.length&&!inScope(k))k++;if(k<S.length)openSec(k,1);else{S.forEach((s,x)=>$('sb'+x).classList.add('hide'));$('nc').scrollIntoView({behavior:'smooth'})}if(k<S.length)$('sc'+k).scrollIntoView({behavior:'smooth',block:'start'})}
+function applyScope(){S.forEach((s,i)=>$('sc'+i).classList.toggle('out',!inScope(i)));calc()}
+function scopeChg(){window.dirty=1;applyScope()}
+function dstate(i,j){const d=$('dd'+i+'_'+j),has=!!$('b'+i+'_'+j).value,open=!d.classList.contains('hide');d.classList.toggle('has',has);$('db'+i+'_'+j).textContent=open?'Hide remarks':(has?'Remarks \u2022':'+ Remarks')}
+function showDet(i,j,on){$('dd'+i+'_'+j).classList.toggle('hide',!on);dstate(i,j)}
+function det(i,j){showDet(i,j,$('dd'+i+'_'+j).classList.contains('hide'))}
+function chg(i,j){if(val(i,j)=='TP')showDet(i,j,1);calc()}
+function val(i,j){const r=document.querySelector(`input[name=r${i}_${j}]:checked`);return r?r.value:''}
+function calc(){let P=0,TP=0,TB=0,N=0;S.forEach((s,i)=>{if(!inScope(i)){$('ss'+i).textContent='Not in scope';return}let p=0,t=0,b=0;s[1].forEach((q,j)=>{const v=val(i,j);N++;if(v=='P')p++;if(v=='TP')t++;if(v=='TB')b++;const e=$('pr'+i+'_'+j);if(e)e.textContent=v?'['+({P:'C',TP:'NC',TB:'NA'}[v])+'] ':''});P+=p;TP+=t;TB+=b;$('ss'+i).textContent=`${p+t+b}/${s[1].length} done`+(t?` | ${t} NC`:'')});
+$('sAll').textContent=P+TP+TB;$('sP').textContent=P;$('sTP').textContent=TP;$('sTB').textContent=TB;$('sPct').textContent=(P+TP)?Math.round(P/(P+TP)*1000)/10+'%':'-';sig();return N-(P+TP+TB)}
+function ncRow(d={}){const tr=document.createElement('tr');tr.innerHTML=`<td></td><td><textarea>${d.f||''}</textarea></td><td><textarea>${d.t||''}</textarea></td><td><input type="text" value="${d.p||''}"></td><td><input type="date" value="${d.d||''}"></td><td><select><option></option><option>Open</option><option>Closed</option></select></td><td><textarea>${d.v||''}</textarea></td><td class="noprint"><button class="btn alt" onclick="this.closest('tr').remove();num()">x</button></td>`;tr.querySelector('select').value=d.s||'';$('nc').tBodies[0].appendChild(tr);num()}
+function num(){[...$('nc').tBodies[0].rows].forEach((r,i)=>r.cells[0].textContent=i+1)}
+function addNC(){ncRow()}
+function autoNC(){S.forEach((s,i)=>s[1].forEach((q,j)=>{if(val(i,j)=='TP'){const tag=`[${i+1}.${j+1}] `;if(![...$('nc').tBodies[0].rows].some(r=>r.cells[1].firstChild.value.startsWith(tag)))ncRow({f:tag+q+(($('b'+i+'_'+j).value)?' - '+$('b'+i+'_'+j).value:'')})}}))}
+function collect(){const d={id:Date.now(),items:[],sn:[],nc:[],cfg:S,scope:S.map((s,i)=>inScope(i))};F.forEach(f=>d[f]=$(f).value);S.forEach((s,i)=>{d.sn.push($('sn'+i).value);s[1].forEach((q,j)=>d.items.push({s:i+1,n:j+1,q,v:inScope(i)?val(i,j):'',b:$('b'+i+'_'+j).value}))});
+[...$('nc').tBodies[0].rows].forEach(r=>{const c=r.cells;d.nc.push({f:c[1].firstChild.value,t:c[2].firstChild.value,p:c[3].firstChild.value,d:c[4].firstChild.value,s:c[5].firstChild.value,v:c[6].firstChild.value})});return d}
+function load(d){S=d.cfg||CFG.S;build();F.forEach(f=>$(f).value=d[f]||'');d.items.forEach(x=>{const i=x.s-1,j=x.n-1;if(!$("b"+i+"_"+j))return;if(x.v){const r=document.querySelector(`input[name=r${i}_${j}][value=${x.v}]`);if(r)r.checked=true}$('b'+i+'_'+j).value=x.b||'';showDet(i,j,x.b||x.v=='TP'?1:0)});(d.scope||[]).forEach((v,i)=>{if($('sp'+i))$('sp'+i).checked=v});applyScope();(d.sn||[]).forEach((v,i)=>{if($('sn'+i))$('sn'+i).value=v});$('nc').tBodies[0].innerHTML='';(d.nc||[]).forEach(ncRow);calc();window.curId=d.id}
+function reset(){S=CFG.S;build();$('nc').tBodies[0].innerHTML='';F.forEach(f=>{if(f!='syarikat'&&f!='rujukan')$(f).value=''});$('tarikh').value=new Date().toISOString().slice(0,10);$('lokasi').value=localStorage.getItem('iha_loc')||'';$('juruaudit').value=localStorage.getItem('iha_aud')||'';window.curId=null;window.dirty=0;calc();window.scrollTo(0,0)}
+function db(){try{return JSON.parse(localStorage.getItem('iha_db')||'[]')}catch(e){return[]}}
+async function save(){if(!$('tarikh').value||!$('lokasi').value){toast('Enter the audit date and location first');return}
+const left=calc();if(left&&!confirm(left+' items unfilled. Save anyway?'))return;
+const d=collect();if(window.curId)d.id=window.curId;d.sent=!getU();const a=db().filter(x=>x.id!=d.id);a.unshift(d);try{localStorage.setItem('iha_db',JSON.stringify(a))}catch(e){toast('Storage full');return}window.curId=d.id;localStorage.removeItem('iha_draft');window.dirty=0;asNote('');localStorage.setItem('iha_loc',d.lokasi);localStorage.setItem('iha_aud',d.juruaudit);
+const u=getU();if(u){try{await post(d);mark(d.id);toast('Saved and sent to Google Sheet')}catch(e){toast('Saved on this device. Will send when online')}}else toast('Saved in this browser');list()}
+function allRecs(){const m=new Map();REM.forEach(d=>m.set(String(d.id),d));db().forEach(d=>m.set(String(d.id),d));return[...m.values()].sort((x,y)=>(y.tarikh||'')<(x.tarikh||'')?-1:1)}
+const post=d=>{const p=Object.assign({},d);p.sT=(d.cfg||S).map(s=>s[0]);delete p.cfg;delete p.sent;return fetch(getU(),{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p)})};
+function mark(id){const a=db(),r=a.find(x=>x.id==id);if(r){r.sent=true;localStorage.setItem('iha_db',JSON.stringify(a))}}
+async function sync(){const u=getU();if(!u)return;$('syn').textContent='Syncing...';try{for(const d of db().filter(x=>x.sent===false)){await post(d);mark(d.id)}const a=await(await fetch(u+'?action=records')).json();if(Array.isArray(a)){REM=a;try{localStorage.setItem('iha_rem',JSON.stringify(a))}catch(e){}}$('syn').textContent='Synced '+new Date().toLocaleTimeString();list();if(!$('ana').classList.contains('hide'))ana()}catch(e){$('syn').textContent='Offline: showing saved data'}}
+function list(){const f=$('rL').value,a=allRecs().filter(d=>!f||d.lokasi==f);$('recList').innerHTML=a.length?a.map(d=>`<div class="it"><b>${d.tarikh||'-'}</b> | ${esc(d.lokasi||'-')} | ${esc(d.bahagian||'-')}${d.sent===false?' <span style="color:'+AMB+'">(not sent yet)</span>':''}<br><span style="color:var(--mut)">Auditor: ${esc(d.juruaudit||'-')}</span><div class="bar" style="margin-top:6px"><button class="btn alt" onclick="openRec(${d.id},0)">Open</button><button class="btn alt" onclick="openRec(${d.id},1)">Print</button>${getU()?'':`<button class="btn red" onclick="delRec(${d.id})">Delete</button>`}</div></div>`).join(''):'<p style="color:var(--mut)">No records yet. Save an audit first.</p>'}
+function rebuildCfg(d){const t=d.sT||[],o=[];d.items.forEach(x=>{const i=x.s-1;(o[i]=o[i]||[t[i]||('Section '+x.s),[]])[1][x.n-1]=x.q});return o}
+function openRec(id,p){const go=d=>{if(window.dirty&&!confirm('Open this record? Unsaved changes in the current form will be replaced.'))return;localStorage.removeItem('iha_draft');load(d);window.dirty=0;asNote('');tab('fill');if(p)setTimeout(doPrint,200)};const l=db().find(x=>x.id==id);if(l)return go(l);fetch(getU()+'?action=record&id='+id).then(r=>r.json()).then(d=>{if(d&&d.items){d.cfg=rebuildCfg(d);go(d)}else toast('Record not found')}).catch(()=>toast('Could not load record'))}
+function delRec(id){if(confirm('Delete this record?')){localStorage.setItem('iha_db',JSON.stringify(db().filter(x=>x.id!=id)));list()}}
+function tab(t){const T=['fill','rec','ana','edit','set'];T.forEach(x=>{$(x).classList.toggle('hide',x!=t);$('t'+x[0].toUpperCase()+x.slice(1)).classList.toggle('on',x==t)});if(t=='rec'){list();sync()}if(t=='ana'){ana();sync()}if(t=='set')$('url').value=getU()}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'),AMB='#c98a00';
+const col=v=>v>=90?'var(--p)':v>=70?AMB:'var(--tp)';
+const pct=(it,f)=>{let p=0,t=0;it.forEach(x=>{if(f&&!f(x))return;if(x.v=='P')p++;if(x.v=='TP')t++});return(p+t)?Math.round(p/(p+t)*1000)/10:null};
+const bar=(l,v,m,tx,c)=>`<div class="br"><div>${esc(l)}</div><div class="bt"><div style="width:${Math.min(100,v/m*100)}%;background:${c}"></div></div><div class="bv">${tx}</div></div>`;
+function ana(keep){const all=allRecs().filter(d=>d.tarikh);const ys=[...new Set(all.map(d=>d.tarikh.slice(0,4)))].sort().reverse();
+ if(!keep){const cur=$('aY').value;$('aY').innerHTML='<option value="">All</option>'+ys.map(y=>`<option>${y}</option>`).join('');$('aY').value=ys.includes(cur)?cur:(ys[0]||'')}
+ const yr=$('aY').value,lc=$('aL').value;const a=all.filter(d=>(!yr||d.tarikh.slice(0,4)==yr)&&(!lc||d.lokasi==lc)).sort((x,y)=>x.tarikh<y.tarikh?-1:1);
+ if(!a.length){['aSum','aTrend','aSec','aNC'].forEach(k=>$(k).innerHTML='<p class="mut">No saved audits for this filter yet.</p>');$('aSel').innerHTML='';return}
+ const sc=a.map(d=>pct(d.items)).filter(v=>v!==null),nc=a.reduce((n,d)=>n+d.items.filter(x=>x.v=='TP').length,0);
+ $('aSum').innerHTML=`<div class="sum" style="grid-template-columns:repeat(3,1fr)"><div><b>${a.length}</b>Audits</div><div><b>${sc.length?Math.round(sc.reduce((x,y)=>x+y,0)/sc.length*10)/10+'%':'-'}</b>Avg. compliance</div><div><b>${nc}</b>Total NC</div></div>`;
+ $('aTrend').innerHTML='<div class="cols">'+a.map(d=>{const v=pct(d.items);return v===null?'':`<div class="cl"><span>${v}</span><i style="height:${v*.8}%;background:${col(v)}"></i><small>${d.tarikh.slice(5)}<br>${esc(d.lokasi)}</small></div>`}).join('')+'</div>';
+ const sel=$('aSel');const prev=keep?sel.value:'';sel.innerHTML=a.slice().reverse().map(d=>`<option value="${d.id}">${d.tarikh} | ${esc(d.lokasi)} | ${esc(d.bahagian||'-')}</option>`).join('');if(prev)sel.value=prev;
+ const d=a.find(x=>x.id==sel.value)||a[a.length-1],cf=d.cfg||(d.sT?d.sT.map(t=>[t]):CFG.S);
+ $('aSec').innerHTML=cf.map((s,i)=>{const v=pct(d.items,x=>x.s==i+1);return v===null?bar(s[0],0,100,'-','var(--line)'):bar(s[0],v,100,v+'%',col(v))}).join('');
+ const m={};a.forEach(d=>d.items.forEach(x=>{if(x.v=='TP'){const k=x.q;m[k]=(m[k]||0)+1}}));const top=Object.entries(m).sort((x,y)=>y[1]-x[1]).slice(0,8);
+ $('aNC').innerHTML=top.length?top.map(([q,n])=>bar(q.length>60?q.slice(0,58)+'…':q,n,a.length,n+'/'+a.length,'var(--tp)')).join(''):'<p class="mut">No NC items recorded.</p>'}
+const sgFs=n=>n.length<=12?34:n.length<=20?28:n.length<=30?22:17;
+function sig(){[['sgSedia','sedia'],['sgSemak','semak']].forEach(([a,b])=>{const e=$(a);if(!e)return;const n=$(b).value.trim();e.textContent=n;e.style.fontSize=sgFs(n)+'px'})}
+const fd=s=>s?s.split('-').reverse().join('/'):'';
+function renderPrint(){const d=collect(),e=esc,bx=(v,x)=>v==x?'\u2612':'\u2610';
+ let P=0,T=0,B=0;d.items.forEach(x=>{if(x.v=='P')P++;if(x.v=='TP')T++;if(x.v=='TB')B++});
+ const out=S.map((s,i)=>d.scope[i]?0:i+1).filter(Boolean);
+ let h='<h1>INTERNAL HALAL AUDIT CHECKLIST</h1>';
+ h+=`<h3>A. Audit information</h3><table><tr><td>Company name</td><td>${e(d.syarikat)}</td><td>Audit date</td><td>${fd(d.tarikh)}</td></tr>
+<tr><td>Location / factory</td><td>${['F2','F3','HQ','Others'].map(l=>bx(d.lokasi,l)+' '+l).join(' &nbsp; ')}</td><td>Time</td><td>${e(d.masa)}</td></tr>
+<tr><td>Department audited</td><td>${e(d.bahagian)}</td><td>Auditor</td><td>${e(d.juruaudit)}</td></tr>
+<tr><td>Auditee</td><td>${e(d.auditee)}</td><td>Reference document</td><td>${e(d.rujukan)}</td></tr></table>
+<p>Guidance: tick C = Compliant, NC = Non-compliant, NA = Not applicable. Record objective evidence or record numbers. This checklist is a working draft and must be verified against the official documents and the current certification scope.</p>`;
+ if(out.length)h+=`<p><b>Scope:</b> section(s) ${out.join(', ')} not audited.</p>`;
+ S.forEach((s,i)=>{if(!d.scope[i])return;const its=d.items.filter(x=>x.s==i+1);
+  h+=`<h3>${e(s[0])}</h3><table><thead><tr><th class="n">No.</th><th>Audit criteria</th><th class="c">C</th><th class="c">NC</th><th class="c">NA</th></tr></thead><tbody>`+its.map(x=>`<tr><td class="n">${x.n}</td><td>${e(x.q)}</td><td class="c">${bx(x.v,'P')}</td><td class="c">${bx(x.v,'TP')}</td><td class="c">${bx(x.v,'TB')}</td></tr>`).join('')+'</tbody></table>';
+  const ev=[d.sn[i]].concat(its.filter(x=>x.b).map(x=>`${i+1}.${x.n}: ${x.b}`)).filter(Boolean).join('\n');
+  h+=`<div style="break-inside:avoid"><b style="font-size:10.5px">Audit evidence / remarks:</b><div class="pl">${e(ev)}</div></div>`});
+ const nc=d.nc.slice();while(nc.length<5)nc.push({});
+ h+='<h3>B. Non-conformance record and corrective action</h3><table><thead><tr><th class="n">No.</th><th>Finding / objective evidence</th><th>Corrective action</th><th>PIC</th><th>Target date</th><th>Status</th><th>Effectiveness verification</th></tr></thead><tbody>'+nc.map((r,i)=>`<tr><td class="n">${i+1}</td><td>${e(r.f||'')}</td><td>${e(r.t||'')}</td><td>${e(r.p||'')}</td><td>${fd(r.d||'')}</td><td>${e(r.s||'')}</td><td>${e(r.v||'')}</td></tr>`).join('')+'</tbody></table>';
+ h+=`<div style="break-inside:avoid"><h3>C. Audit summary</h3><table><tr><td>Total items checked: <b>${P+T+B}</b></td><td>Total NC: <b>${T}</b></td></tr><tr><td>Total C: <b>${P}</b></td><td>Total NA: <b>${B}</b></td></tr><tr><td colspan="2">Compliance (C \u00f7 (C + NC)): <b>${(P+T)?Math.round(P/(P+T)*1000)/10+'%':'-'}</b></td></tr><tr><td colspan="2" style="height:16mm">Auditor conclusion / comments:<br>${e(d.ulasan)}</td></tr></table>
+<h3>D. Verification</h3><table class="sg"><tr><td><b>Prepared by:</b><div class="sgl"><span class="sgp" style="font-size:${Math.round(sgFs(d.sedia.trim())*.65)}px">${e(d.sedia.trim())}</span></div>Name: ${e(d.sedia)}<br>Position: ${e(d.pSedia)}<br>Date: ${fd(d.tSedia)}</td><td><b>Verified by:</b><div class="sgl"><span class="sgp" style="font-size:${Math.round(sgFs(d.semak.trim())*.65)}px">${e(d.semak.trim())}</span></div>Name: ${e(d.semak)}<br>Position: ${e(d.pSemak)}<br>Date: ${fd(d.tSemak)}</td></tr></table>
+<p>Document control note: this draft checklist is an internal audit aid. Verify each item against MHMS 2020, the prevailing MPPHM, the industry category, the certification scope and company procedures before approving it as a controlled document. Corrective action timelines must follow the prevailing procedures and requirements.</p></div>`;
+ $('pform').innerHTML=h}
+function asNote(t){const e=$('as');if(e)e.textContent=t}
+function autosave(){if(!window.dirty)return;try{const d=collect();d.id=window.curId||d.id;localStorage.setItem('iha_draft',JSON.stringify({d,cur:window.curId}));asNote('Draft autosaved '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}))}catch(e){asNote('Autosave failed (storage full)')}}
+function doPrint(){renderPrint();window.print()}
+window.addEventListener('beforeprint',renderPrint);
+let ED=[];
+function unlock(){if($('pw').value===CFG.pw){$('tEdit').textContent='🔓 Edit Form';$('lock').classList.add('hide');$('ed').classList.remove('hide');ED=JSON.parse(JSON.stringify(CFG.S));drawEd();$('pw').value=''}else toast('Wrong password')}
+function lockEd(){$('tEdit').textContent='🔒 Edit Form';$('ed').classList.add('hide');$('lock').classList.remove('hide')}
+function drawEd(){$('edBody').innerHTML=ED.map((s,i)=>`<div class="it"><div class="row"><input type="text" value="${esc(s[0]).replace(/"/g,'&quot;')}" oninput="ED[${i}][0]=this.value"><button class="btn red" onclick="if(confirm('Delete this section?')){ED.splice(${i},1);drawEd()}">x</button></div>`+s[1].map((q,j)=>`<div class="row"><b>${j+1}</b><textarea oninput="ED[${i}][1][${j}]=this.value">${esc(q)}</textarea><button class="btn alt" onclick="ED[${i}][1].splice(${j},1);drawEd()">x</button></div>`).join('')+`<button class="btn alt" onclick="ED[${i}][1].push('');drawEd()">+ Add item</button></div>`).join('')}
+function edSec(){ED.push(['New section',['']]);drawEd()}
+function edDef(){if(confirm('Restore the original criteria?')){ED=JSON.parse(JSON.stringify(DEF));drawEd()}}
+function persist(){localStorage.setItem('iha_cfg',JSON.stringify(CFG));const u=getU();if(u)fetch(u,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'config',cfg:CFG})}).catch(()=>{})}
+function edSave(){const n=ED.map(s=>[s[0].trim(),s[1].map(q=>q.trim()).filter(Boolean)]).filter(s=>s[0]&&s[1].length);if(!n.length){toast('Add at least one section with one item');return}
+ CFG.S=n;persist();ED=JSON.parse(JSON.stringify(n));drawEd();if(!window.dirty&&!window.curId)reset();toast('Saved. Applies to new audits')}
+function chPw(){const p=$('npw').value.trim();if(p.length<4){toast('Minimum 4 characters');return}CFG.pw=p;persist();$('npw').value='';toast('Password changed')}
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+try{const c=JSON.parse(localStorage.getItem('iha_cfg'));if(c&&c.S)CFG=c}catch(e){}
+let DR=null;try{DR=JSON.parse(localStorage.getItem('iha_draft')||'null')}catch(e){}
+reset();$('fill').addEventListener('input',()=>window.dirty=1);
+if(DR&&DR.d&&DR.d.items){load(DR.d);window.dirty=1;toast('Unsaved draft restored');asNote('Draft restored')}
+setInterval(autosave,8000);addEventListener('pagehide',autosave);document.addEventListener('visibilitychange',()=>{if(document.hidden)autosave()});
+{const u=getU();if(u)fetch(u+'?action=config').then(r=>r.json()).then(c=>{if(c&&c.S){CFG=c;localStorage.setItem('iha_cfg',JSON.stringify(c));if(!window.dirty&&!window.curId)reset()}}).catch(()=>{})}
+sync();
+</script>
+</body>
+</html>

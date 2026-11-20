@@ -70,8 +70,8 @@ td input,td textarea{padding:4px;font-size:13px}
 nav{flex-wrap:wrap}nav button{font-size:13px;padding:7px 4px;min-width:30%}
 .br{display:grid;grid-template-columns:minmax(90px,38%) 1fr 52px;gap:6px;align-items:center;margin:5px 0;font-size:13px}
 .bt{background:var(--bg);border-radius:4px;height:14px;overflow:hidden}.bt div{height:100%}.bv{text-align:right;font-weight:600}
-.cols{display:flex;gap:6px;align-items:flex-end;height:170px;overflow-x:auto;padding-top:6px}
-.cl{flex:0 0 46px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:11px}
+.cols{display:flex;gap:6px;align-items:flex-end;height:230px;overflow-x:auto;padding-top:6px}
+.cl{flex:0 0 58px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:11px}
 .cl i{display:block;width:70%;background:var(--g);border-radius:3px 3px 0 0;min-height:2px}.cl small{color:var(--mut);margin-top:3px;text-align:center;font-size:10px}
 .ed .row{display:flex;gap:6px;margin:5px 0}.ed .row textarea{flex:1}
 .mut{color:var(--mut);font-size:12px}
@@ -133,10 +133,10 @@ label.sc{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink)
 <div id="rec" class="hide"><div class="card"><h2>Saved records</h2><div class="grid"><div><label>Location</label><select id="rL" onchange="list()"><option value="">All</option><option>F2</option><option>F3</option><option>HQ</option><option>Others</option></select></div></div><div class="bar" style="margin:8px 0"><button class="btn alt" onclick="sync()">Refresh</button><span class="mut" id="syn"></span></div><div id="recList"></div></div></div>
 
 <div id="ana" class="hide">
- <div class="card"><h2>Trend analysis</h2><div class="grid"><div><label>Year</label><select id="aY" onchange="ana()"></select></div><div><label>Location</label><select id="aL" onchange="ana()"><option value="">All</option><option>F2</option><option>F3</option><option>HQ</option><option>Others</option></select></div></div>
- <p class="mut">Based on audits saved in this browser. Compliance = C ÷ (C + NC), NA excluded.</p><div id="aSum"></div></div>
- <div class="card"><h2>Compliance trend (% per audit)</h2><div id="aTrend"></div></div>
- <div class="card"><h2>Compliance by section</h2><label>Audit</label><select id="aSel" onchange="ana(1)"></select><div id="aSec" style="margin-top:8px"></div></div>
+ <div class="card"><h2>Trend analysis (year on year)</h2><div class="grid"><div><label>Location</label><select id="aL" onchange="ana()"><option value="">All</option><option>F2</option><option>F3</option><option>HQ</option><option>Others</option></select></div></div>
+ <p class="mut">Compares audits year by year. Compliance = C ÷ (C + NC), NA excluded. Based on audits in the Google Sheet and on this device.</p><div id="aSum"></div></div>
+ <div class="card"><h2>Compliance by year (%)</h2><div id="aTrend"></div></div>
+ <div class="card"><h2>Compliance by section, year on year</h2><div id="aSec" style="overflow-x:auto"></div></div>
  <div class="card"><h2>Recurring non-conformances</h2><p class="mut">Items marked NC most often across the audits shown.</p><div id="aNC"></div></div>
 </div>
 <div id="edit" class="hide">
@@ -147,7 +147,7 @@ label.sc{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink)
 </div>
 <div id="set" class="hide"><div class="card"><h2>Google Sheet connection</h2>
  <label>Web App URL (Apps Script)</label><input type="text" id="url" placeholder="https://script.google.com/macros/s/.../exec">
- <div class="bar" style="margin-top:8px"><button class="btn" onclick="localStorage.setItem('iha_url',document.getElementById('url').value.trim());toast('Saved')">Save URL</button></div>
+ <div class="bar" style="margin-top:8px"><button class="btn" onclick="localStorage.setItem('iha_url',document.getElementById('url').value.trim());toast('Saved')">Save URL</button><button class="btn alt" onclick="testConn()">Test connection</button></div><div id="tst" style="margin-top:10px;font-size:14px"></div>
  <p style="font-size:12px;color:var(--mut)">Without a URL, records are saved in this browser only.</p></div></div>
 </main>
 <div id="pform"></div>
@@ -156,10 +156,10 @@ label.sc{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink)
 <script>
 // ============================================================================
 //  PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BETWEEN THE QUOTES BELOW
-//  (https://script.google.com/macros/s/AKfycbzt1UsU5R35CY7VGTgB2foBz1cnQx8WtLIfcWYRVJnHgaQwRS5F8aU8LjijcYEdirJ5/exec). Example:
+//  (the long link that ends with /exec). Example:
 //  const DEFAULT_URL='https://script.google.com/macros/s/AKfycb.../exec';
 // ============================================================================
-const DEFAULT_URL='';
+const DEFAULT_URL='https://script.google.com/macros/s/AKfycbzt1UsU5R35CY7VGTgB2foBz1cnQx8WtLIfcWYRVJnHgaQwRS5F8aU8LjijcYEdirJ5/exec';
 const DEF=[
 ["1. Halal documentation",["Halal file is complete and up to date.","HAS manual / IHCS documents are available according to the applicable system.","Halal policy is approved and communicated to employees.","Appointment of the Halal Executive and Internal Halal Committee (IHC) is recorded, where applicable.","IHC meeting records and follow-up actions are available.","Halal awareness training records are kept.","Previous internal halal audit records and corrective actions are available.","HAS review records and related documentation are up to date."]],
 ["2. Raw material and supplier control",["Master list of raw materials is up to date.","Raw materials used match the approved and declared materials.","Halal certificates of raw materials are valid and recognised, where applicable.","Actual manufacturer and supplier names can be identified.","Raw material specifications, COAs and supporting documents are available as required.","Purchase invoices and raw material receiving records are kept.","Changes of supplier, manufacturer or formulation are assessed and approved before use.","New materials are not used before the required halal review and approval.","Halal-risk materials are identified and their controls are recorded."]],
@@ -235,11 +235,18 @@ function db(){try{return JSON.parse(localStorage.getItem('iha_db')||'[]')}catch(
 async function save(){if(!$('tarikh').value||!$('lokasi').value){toast('Enter the audit date and location first');return}
 const left=calc();if(left&&!confirm(left+' items unfilled. Save anyway?'))return;
 const d=collect();if(window.curId)d.id=window.curId;d.sent=!getU();const a=db().filter(x=>x.id!=d.id);a.unshift(d);try{localStorage.setItem('iha_db',JSON.stringify(a))}catch(e){toast('Storage full');return}window.curId=d.id;localStorage.removeItem('iha_draft');window.dirty=0;asNote('');localStorage.setItem('iha_loc',d.lokasi);localStorage.setItem('iha_aud',d.juruaudit);
-const u=getU();if(u){try{await post(d);mark(d.id);toast('Saved and sent to Google Sheet')}catch(e){toast('Saved on this device. Will send when online')}}else toast('Saved in this browser');list()}
+const u=getU();if(u){try{await post(d);if(await verify(d.id)){mark(d.id);toast('Saved and sent to Google Sheet')}else toast('Saved on this device, but NOT found in Google Sheet. Open the Google Sheet tab and tap Test connection.',7000)}catch(e){toast('Saved on this device. Will send when online')}}else toast('Saved in this browser');list()}
 function allRecs(){const m=new Map();REM.forEach(d=>m.set(String(d.id),d));db().forEach(d=>m.set(String(d.id),d));return[...m.values()].sort((x,y)=>(y.tarikh||'')<(x.tarikh||'')?-1:1)}
+async function verify(id){try{const j=await(await fetch(getU()+'?action=record&id='+id)).json();return !!(j&&j.items)}catch(e){return false}}
+async function testConn(){const u=getU(),o=$('tst');if(!u){o.innerHTML='<b style="color:var(--tp)">No URL set.</b> Paste the Web app URL above and tap Save URL.';return}
+ o.textContent='Testing...';
+ try{const t=await(await fetch(u+'?action=ping')).text();let j;try{j=JSON.parse(t)}catch(e){o.innerHTML='<b style="color:var(--tp)">Not connected.</b> The URL returned a web page, not data. In Apps Script: Deploy &gt; Manage deployments, set <i>Who has access</i> to <b>Anyone</b>, and use the Web app URL that ends in /exec.';return}
+  if(j&&j.ok){const a=db(),un=a.filter(x=>x.sent===false).length;o.innerHTML=`<b style="color:var(--p)">Connected.</b> Script version: ${esc(j.version)}. Audits in Google Sheet: ${j.audits}. On this device: ${a.length} saved, ${un} not sent yet.`+(un?' Open Records / Print and tap Refresh to send them.':'')}
+  else o.innerHTML='<b style="color:'+AMB+'">Reached the URL, but the Apps Script is an old version.</b> Paste the latest Code.gs, then Deploy &gt; Manage deployments &gt; Edit &gt; New version.'}
+ catch(e){o.innerHTML='<b style="color:var(--tp)">Cannot reach the URL.</b> Check it is the full link ending in /exec and that this phone is online.'}}
 const post=d=>{const p=Object.assign({},d);p.sT=(d.cfg||S).map(s=>s[0]);delete p.cfg;delete p.sent;return fetch(getU(),{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p)})};
 function mark(id){const a=db(),r=a.find(x=>x.id==id);if(r){r.sent=true;localStorage.setItem('iha_db',JSON.stringify(a))}}
-async function sync(){const u=getU();if(!u)return;$('syn').textContent='Syncing...';try{for(const d of db().filter(x=>x.sent===false)){await post(d);mark(d.id)}const a=await(await fetch(u+'?action=records')).json();if(Array.isArray(a)){REM=a;try{localStorage.setItem('iha_rem',JSON.stringify(a))}catch(e){}}$('syn').textContent='Synced '+new Date().toLocaleTimeString();list();if(!$('ana').classList.contains('hide'))ana()}catch(e){$('syn').textContent='Offline: showing saved data'}}
+async function sync(){const u=getU();if(!u)return;$('syn').textContent='Syncing...';try{for(const d of db().filter(x=>x.sent===false)){await post(d);if(await verify(d.id))mark(d.id)}const a=await(await fetch(u+'?action=records')).json();if(Array.isArray(a)){REM=a;try{localStorage.setItem('iha_rem',JSON.stringify(a))}catch(e){}}$('syn').textContent='Synced '+new Date().toLocaleTimeString();list();if(!$('ana').classList.contains('hide'))ana()}catch(e){$('syn').textContent='Offline: showing saved data'}}
 function list(){const f=$('rL').value,a=allRecs().filter(d=>!f||d.lokasi==f);$('recList').innerHTML=a.length?a.map(d=>`<div class="it"><b>${d.tarikh||'-'}</b> | ${esc(d.lokasi||'-')} | ${esc(d.bahagian||'-')}${d.sent===false?' <span style="color:'+AMB+'">(not sent yet)</span>':''}<br><span style="color:var(--mut)">Auditor: ${esc(d.juruaudit||'-')}</span><div class="bar" style="margin-top:6px"><button class="btn alt" onclick="openRec(${d.id},0)">Open</button><button class="btn alt" onclick="openRec(${d.id},1)">Print</button>${getU()?'':`<button class="btn red" onclick="delRec(${d.id})">Delete</button>`}</div></div>`).join(''):'<p style="color:var(--mut)">No records yet. Save an audit first.</p>'}
 function rebuildCfg(d){const t=d.sT||[],o=[];d.items.forEach(x=>{const i=x.s-1;(o[i]=o[i]||[t[i]||('Section '+x.s),[]])[1][x.n-1]=x.q});return o}
 function openRec(id,p){const go=d=>{if(window.dirty&&!confirm('Open this record? Unsaved changes in the current form will be replaced.'))return;localStorage.removeItem('iha_draft');load(d);window.dirty=0;asNote('');tab('fill');if(p)setTimeout(doPrint,200)};const l=db().find(x=>x.id==id);if(l)return go(l);fetch(getU()+'?action=record&id='+id).then(r=>r.json()).then(d=>{if(d&&d.items){d.cfg=rebuildCfg(d);go(d)}else toast('Record not found')}).catch(()=>toast('Could not load record'))}
@@ -249,18 +256,22 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'),AMB='#c98a00';
 const col=v=>v>=90?'var(--p)':v>=70?AMB:'var(--tp)';
 const pct=(it,f)=>{let p=0,t=0;it.forEach(x=>{if(f&&!f(x))return;if(x.v=='P')p++;if(x.v=='TP')t++});return(p+t)?Math.round(p/(p+t)*1000)/10:null};
 const bar=(l,v,m,tx,c)=>`<div class="br"><div>${esc(l)}</div><div class="bt"><div style="width:${Math.min(100,v/m*100)}%;background:${c}"></div></div><div class="bv">${tx}</div></div>`;
-function ana(keep){const all=allRecs().filter(d=>d.tarikh);const ys=[...new Set(all.map(d=>d.tarikh.slice(0,4)))].sort().reverse();
- if(!keep){const cur=$('aY').value;$('aY').innerHTML='<option value="">All</option>'+ys.map(y=>`<option>${y}</option>`).join('');$('aY').value=ys.includes(cur)?cur:(ys[0]||'')}
- const yr=$('aY').value,lc=$('aL').value;const a=all.filter(d=>(!yr||d.tarikh.slice(0,4)==yr)&&(!lc||d.lokasi==lc)).sort((x,y)=>x.tarikh<y.tarikh?-1:1);
- if(!a.length){['aSum','aTrend','aSec','aNC'].forEach(k=>$(k).innerHTML='<p class="mut">No saved audits for this filter yet.</p>');$('aSel').innerHTML='';return}
- const sc=a.map(d=>pct(d.items)).filter(v=>v!==null),nc=a.reduce((n,d)=>n+d.items.filter(x=>x.v=='TP').length,0);
- $('aSum').innerHTML=`<div class="sum" style="grid-template-columns:repeat(3,1fr)"><div><b>${a.length}</b>Audits</div><div><b>${sc.length?Math.round(sc.reduce((x,y)=>x+y,0)/sc.length*10)/10+'%':'-'}</b>Avg. compliance</div><div><b>${nc}</b>Total NC</div></div>`;
- $('aTrend').innerHTML='<div class="cols">'+a.map(d=>{const v=pct(d.items);return v===null?'':`<div class="cl"><span>${v}</span><i style="height:${v*.8}%;background:${col(v)}"></i><small>${d.tarikh.slice(5)}<br>${esc(d.lokasi)}</small></div>`}).join('')+'</div>';
- const sel=$('aSel');const prev=keep?sel.value:'';sel.innerHTML=a.slice().reverse().map(d=>`<option value="${d.id}">${d.tarikh} | ${esc(d.lokasi)} | ${esc(d.bahagian||'-')}</option>`).join('');if(prev)sel.value=prev;
- const d=a.find(x=>x.id==sel.value)||a[a.length-1],cf=d.cfg||(d.sT?d.sT.map(t=>[t]):CFG.S);
- $('aSec').innerHTML=cf.map((s,i)=>{const v=pct(d.items,x=>x.s==i+1);return v===null?bar(s[0],0,100,'-','var(--line)'):bar(s[0],v,100,v+'%',col(v))}).join('');
- const m={};a.forEach(d=>d.items.forEach(x=>{if(x.v=='TP'){const k=x.q;m[k]=(m[k]||0)+1}}));const top=Object.entries(m).sort((x,y)=>y[1]-x[1]).slice(0,8);
- $('aNC').innerHTML=top.length?top.map(([q,n])=>bar(q.length>60?q.slice(0,58)+'…':q,n,a.length,n+'/'+a.length,'var(--tp)')).join(''):'<p class="mut">No NC items recorded.</p>'}
+const dTxt=d=>d==null?'':d>0?`<br><em style="font-style:normal;font-size:10px;color:var(--p)">\u25B2 +${d}</em>`:d<0?`<br><em style="font-style:normal;font-size:10px;color:var(--tp)">\u25BC ${d}</em>`:'<br><em style="font-style:normal;font-size:10px;color:var(--mut)">= 0</em>';
+function ana(){const loc=$('aL').value,all=allRecs().filter(d=>d.tarikh&&(!loc||d.lokasi==loc));
+ if(!all.length){['aSum','aTrend','aSec','aNC'].forEach(k=>$(k).innerHTML='<p class="mut">No saved audits for this filter yet.</p>');return}
+ const yr=d=>d.tarikh.slice(0,4),years=[...new Set(all.map(yr))].sort(),LO=['F2','F3','HQ','Others'];
+ const sc=all.map(d=>pct(d.items)).filter(v=>v!==null),nc=all.reduce((n,d)=>n+d.items.filter(x=>x.v=='TP').length,0);
+ $('aSum').innerHTML=`<div class="sum"><div><b>${all.length}</b>Audits</div><div><b>${years.length}</b>Years</div><div><b>${sc.length?Math.round(sc.reduce((x,y)=>x+y,0)/sc.length*10)/10+'%':'-'}</b>Avg. compliance</div><div><b>${nc}</b>Total NC</div></div>`;
+ const last={},bars=[];
+ years.forEach(y=>LO.forEach(l=>{const g=all.filter(d=>yr(d)==y&&d.lokasi==l).map(d=>pct(d.items)).filter(v=>v!==null);if(!g.length)return;
+  const v=Math.round(g.reduce((a,b)=>a+b,0)/g.length*10)/10,dl=last[l]!=null?Math.round((v-last[l])*10)/10:null;last[l]=v;bars.push({y,l,v,dl})}));
+ $('aTrend').innerHTML='<div class="cols">'+bars.map(b=>`<div class="cl"><span>${b.v}${dTxt(b.dl)}</span><i style="height:${b.v*.6}%;background:${col(b.v)}"></i><small>${esc(b.l)}<br><b>${b.y}</b></small></div>`).join('')+'</div>'+(years.length<2?'<p class="mut">Only one year of data so far. The year-on-year change appears after the next year\'s audit.</p>':'<p class="mut">\u25B2 / \u25BC = change vs the previous audited year of the same location.</p>');
+ const lt=all.slice().sort((a,b)=>a.tarikh<b.tarikh?-1:1).pop(),cf=lt.cfg||(lt.sT?lt.sT.map(t=>[t]):CFG.S);
+ const cell=(i,y)=>pct(all.filter(d=>yr(d)==y).flatMap(d=>d.items),x=>x.s==i+1);
+ $('aSec').innerHTML='<table><thead><tr><th>Section</th>'+years.map(y=>`<th style="text-align:center">${y}</th>`).join('')+'<th style="text-align:center">Change</th></tr></thead><tbody>'+cf.map((s,i)=>{const vs=years.map(y=>cell(i,y)),a=vs[vs.length-1],p=vs.length>1?vs[vs.length-2]:null,dl=(a!=null&&p!=null)?Math.round((a-p)*10)/10:null;
+  return `<tr><td>${esc(s[0])}</td>${vs.map(v=>`<td style="text-align:center;font-weight:600;color:${v==null?'var(--mut)':col(v)}">${v==null?'-':v+'%'}</td>`).join('')}<td style="text-align:center;font-weight:600;color:${dl>0?'var(--p)':dl<0?'var(--tp)':'var(--mut)'}">${dl==null?'-':(dl>0?'\u25B2 +':dl<0?'\u25BC ':'= ')+dl}</td></tr>`}).join('')+'</tbody></table>';
+ const m={};all.forEach(d=>d.items.forEach(x=>{if(x.v=='TP')m[x.q]=(m[x.q]||0)+1}));const top=Object.entries(m).sort((x,y)=>y[1]-x[1]).slice(0,8);
+ $('aNC').innerHTML=top.length?top.map(([q,n])=>bar(q.length>60?q.slice(0,58)+'\u2026':q,n,all.length,n+'/'+all.length,'var(--tp)')).join(''):'<p class="mut">No NC items recorded.</p>'}
 const sgFs=n=>n.length<=12?34:n.length<=20?28:n.length<=30?22:17;
 function sig(){[['sgSedia','sedia'],['sgSemak','semak']].forEach(([a,b])=>{const e=$(a);if(!e)return;const n=$(b).value.trim();e.textContent=n;e.style.fontSize=sgFs(n)+'px'})}
 const fd=s=>s?s.split('-').reverse().join('/'):'';
@@ -280,8 +291,9 @@ function renderPrint(){const d=collect(),e=esc,bx=(v,x)=>v==x?'\u2612':'\u2610';
   h+=`<div style="break-inside:avoid"><b style="font-size:10.5px">Audit evidence / remarks:</b><div class="pl">${e(ev)}</div></div>`});
  const nc=d.nc.slice();while(nc.length<5)nc.push({});
  h+='<h3>B. Non-conformance record and corrective action</h3><table><thead><tr><th class="n">No.</th><th>Finding / objective evidence</th><th>Corrective action</th><th>PIC</th><th>Target date</th><th>Status</th><th>Effectiveness verification</th></tr></thead><tbody>'+nc.map((r,i)=>`<tr><td class="n">${i+1}</td><td>${e(r.f||'')}</td><td>${e(r.t||'')}</td><td>${e(r.p||'')}</td><td>${fd(r.d||'')}</td><td>${e(r.s||'')}</td><td>${e(r.ve?r.ve+(r.v?' - '+r.v:''):(r.v||''))}</td></tr>`).join('')+'</tbody></table>';
+ const blk=(t,n,p,dt)=>`<td><b>${t}</b><div class="sgl"><span class="sgp" style="font-size:${Math.round(sgFs(d[n].trim())*.65)}px">${e(d[n].trim())}</span></div>Name: ${e(d[n])}<br>Position: ${e(d[p])}<br>Date: ${fd(d[dt])}</td>`;
  h+=`<div style="break-inside:avoid"><h3>C. Audit summary</h3><table><tr><td>Total items checked: <b>${P+T+B}</b></td><td>Total NC: <b>${T}</b></td></tr><tr><td>Total C: <b>${P}</b></td><td>Total NA: <b>${B}</b></td></tr><tr><td colspan="2">Compliance (C \u00f7 (C + NC)): <b>${(P+T)?Math.round(P/(P+T)*1000)/10+'%':'-'}</b></td></tr><tr><td colspan="2" style="height:16mm">Auditor conclusion / comments:<br>${e(d.ulasan)}</td></tr></table>
-<h3>D. Verification</h3><table class="sg"><tr><td><b>Prepared by:</b><div class="sgl"><span class="sgp" style="font-size:${Math.round(sgFs(d.sedia.trim())*.65)}px">${e(d.sedia.trim())}</span></div>Name: ${e(d.sedia)}<br>Position: ${e(d.pSedia)}<br>Date: ${fd(d.tSedia)}</td><td><b>Verified by:</b><div class="sgl"><span class="sgp" style="font-size:${Math.round(sgFs(d.semak.trim())*.65)}px">${e(d.semak.trim())}</span></div>Name: ${e(d.semak)}<br>Position: ${e(d.pSemak)}<br>Date: ${fd(d.tSemak)}</td></tr></table>
+<h3>D. Verification</h3><table class="sg"><tr>${blk('Prepared by:','sedia','pSedia','tSedia')}${blk('Verified by:','semak','pSemak','tSemak')}</tr></table>
 <p>Document control note: this draft checklist is an internal audit aid. Verify each item against MHMS 2020, the prevailing MPPHM, the industry category, the certification scope and company procedures before approving it as a controlled document. Corrective action timelines must follow the prevailing procedures and requirements.</p></div>`;
  $('pform').innerHTML=h}
 function asNote(t){const e=$('as');if(e)e.textContent=t}
@@ -298,7 +310,7 @@ function persist(){localStorage.setItem('iha_cfg',JSON.stringify(CFG));const u=g
 function edSave(){const n=ED.map(s=>[s[0].trim(),s[1].map(q=>q.trim()).filter(Boolean)]).filter(s=>s[0]&&s[1].length);if(!n.length){toast('Add at least one section with one item');return}
  CFG.S=n;persist();ED=JSON.parse(JSON.stringify(n));drawEd();if(!window.dirty&&!window.curId)reset();toast('Saved. Applies to new audits')}
 function chPw(){const p=$('npw').value.trim();if(p.length<4){toast('Minimum 4 characters');return}CFG.pw=p;persist();$('npw').value='';toast('Password changed')}
-function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+function toast(m,ms){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>t.style.display='none',ms||2500)}
 try{const c=JSON.parse(localStorage.getItem('iha_cfg'));if(c&&c.S)CFG=c}catch(e){}
 let DR=null;try{DR=JSON.parse(localStorage.getItem('iha_draft')||'null')}catch(e){}
 reset();$('fill').addEventListener('input',()=>window.dirty=1);
